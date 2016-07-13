@@ -28,16 +28,15 @@ Example of using the spliterator against a faked source (a list with slow fetche
     @Test
     public void run() {
 
-
         List<Integer> nums = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
 
-        Stream<Integer> stream = getPagedStream(5, nums);
-
-        stream.forEach(System.out::print); // completes in about 10 seconds on a macbook pro
-
+        // completes in about 10 seconds on a macbook pro
+        // even though requesting each of the 4 pages sequentially
+        // would take 20 seconds
+        getStreamForMockSlowPageProvider(5, nums).forEach(System.out::print);
     }
 
-    private static <T> Stream<T> getPagedStream(long pageSize, List<T> items) {
+    private static <T> Stream<T> getStreamForMockSlowPageProvider(long pageSize, List<T> items) {
 
         PageProvider<T> producer = (offset, limit, totalSizeSink) -> {
             try {
@@ -73,7 +72,7 @@ using a non-parallel stream.
 The result parallelism characteristics are really equivalent to processing
 a stream originating from a list.
 
-Release Versions
+### Release Versions
 ```xml
 <dependencies>
     <dependency>
@@ -84,7 +83,7 @@ Release Versions
 </dependencies>
 ```
 
-Snapshot Versions
+### Snapshot Versions
 ```xml
 <dependencies>
     <dependency>
@@ -106,5 +105,6 @@ Snapshot Versions
 </repositories>
 ```
 
+### License
 
 This project is licensed under [MIT license](http://opensource.org/licenses/MIT).
