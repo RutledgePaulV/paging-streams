@@ -29,12 +29,12 @@ Example of using the spliterator against a faked source (a list with slow fetche
     public void run() {
 
 
-        List<Integer> nums = Stream.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20)
-                .collect(Collectors.toList());
+        List<Integer> nums = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
 
         Stream<Integer> stream = getPagedStream(5, nums);
 
-        stream.forEach(System.out::print);
+        stream.forEach(System.out::print); // completes in about 10 seconds on a macbook pro
+
     }
 
     private static <T> Stream<T> getPagedStream(long pageSize, List<T> items) {
