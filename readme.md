@@ -25,30 +25,43 @@ I asked the original question, but absolutely all credit for the implementation 
 Example of using the spliterator against a faked source (a list with slow fetches).
 
 ```Java
+
     @Test
-    public void run() {
+    public void test() {
 
-        List<Integer> nums = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
 
-        // completes in about 10 seconds on a macbook pro
-        // even though requesting each of the 4 pages sequentially
-        // would take 20 seconds
-        getStreamForMockSlowPageProvider(5, nums).forEach(System.out::print);
+        List<String> items = IntStream.range(0, 200).boxed()
+                .map(Object::toString).collect(toList());
+
+        Stream<String> stream = PagingStreamSupport
+                .streamBuilder(getProvider(items))
+                .pageSize(30).parallel(true).build();
+
+
+        long start = time();
+        stream.forEach(item -> {});
+        long stop = time();
+
+
+         // completes in about 4 seconds on a macbook pro
+         // even though requesting each of the pages sequentially
+         // would take 12 seconds
+        assertTrue(stop - start < 5000);
+        assertTrue(stop - start > 3000);
+
     }
 
-    private static <T> Stream<T> getStreamForMockSlowPageProvider(long pageSize, List<T> items) {
-
-        PageProvider<T> producer = (offset, limit, totalSizeSink) -> {
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException ignored) {}
-
-            int endIndex = Math.min((int) (offset + limit), items.size());
+    private static PageSource<String> getProvider(List<String> items) {
+        return (offset, limit, totalSizeSink) -> {
+            sleep(2000);
             totalSizeSink.accept(items.size());
-            return items.subList((int) offset, endIndex);
+            return items.subList((int) offset, min((int) (offset + limit), items.size()));
         };
+    }
 
-        return PagingSpliterator.streamPagedSource(producer, pageSize, true);
+    private static void sleep(long millis) {
+        try { Thread.sleep(millis); }
+        catch (InterruptedException ignored) {}
     }
 
 ```

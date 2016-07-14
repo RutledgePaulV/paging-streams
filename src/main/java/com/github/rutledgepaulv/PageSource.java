@@ -5,7 +5,7 @@ import java.util.function.LongConsumer;
 
 @SuppressWarnings("WeakerAccess")
 @FunctionalInterface
-public interface PageProvider<T> {
+public interface PageSource<T> {
 
     /**
      * Get a single page of results given an offset and limit. Should also set
@@ -18,6 +18,6 @@ public interface PageProvider<T> {
      *
      * @return The page of results as a list.
      */
-    List<T> fetchPage(long offset, long limit, LongConsumer totalSizeSink);
+    List<T> fetch(long offset, long limit, LongConsumer totalSizeSink);
 
 }
