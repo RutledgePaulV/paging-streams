@@ -11,9 +11,9 @@
     <version>1.0-SNAPSHOT</version>
     <artifactId>paging-streams</artifactId>
 
-    <name>paging-spliterator</name>
+    <name>paging-streams</name>
     <url>https://github.com/rutledgepaulv/paging-streams</url>
-    <description>A java spliterator implementation for wrapping paged sources</description>
+    <description>A java spliterator implementation for wrapping paged sources.</description>
 
     <scm>
         <url>https://github.com/rutledgepaulv/paging-streams</url>
