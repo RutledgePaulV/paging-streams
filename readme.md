@@ -92,7 +92,7 @@ a stream originating from a list.
     <dependency>
         <groupId>com.github.rutledgepaulv</groupId>
         <artifactId>paging-streams</artifactId>
-        <version><!-- Not yet released --></version>
+        <version>0.8</version>
     </dependency>
 </dependencies>
 ```
