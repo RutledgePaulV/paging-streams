@@ -1,16 +1,17 @@
-[![Build Status](https://travis-ci.org/RutledgePaulV/paging-spliterator.svg?branch=develop)](https://travis-ci.org/RutledgePaulV/paging-spliterator)
-[![Coverage Status](https://coveralls.io/repos/github/RutledgePaulV/paging-spliterator/badge.svg?branch=develop)](https://coveralls.io/github/RutledgePaulV/paging-spliterator?branch=develop)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.rutledgepaulv/paging-spliterator/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.rutledgepaulv/paging-spliterator)
+[![Build Status](https://travis-ci.org/RutledgePaulV/paging-streams.svg?branch=develop)](https://travis-ci.org/RutledgePaulV/paging-streams)
+[![Coverage Status](https://coveralls.io/repos/github/RutledgePaulV/paging-streams/badge.svg?branch=develop)](https://coveralls.io/github/RutledgePaulV/paging-streams?branch=develop)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.rutledgepaulv/paging-streams/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.rutledgepaulv/paging-streams)
 
 
-### Paging-Spliterator
+### Paging-Streams
 
-Spliterators are the Java8 mechanism for detailing how to break items
-up into forks of a fork-join tree and how to iterate elements of a single fork.
-Due to the convenience of the streams there's a relatively common question of
-how to get stream handles from a database without requiring support directly at
-the driver level. Since almost all database drivers support requesting pages of
-results, it's natural to want a transform between the ability to request pages
+Spliterators are the Java8 mechanisms for detailing how to get and traverse elements
+of a stream view over some source. Spliterators include details like how to break 
+processes across elements up into forks of a fork-join tree and how to iterate 
+elements of a single fork. Due to the convenience of the streams there is a relatively 
+common question of how to get stream handles from a database without requiring support 
+directly at the driver level. Since almost all database drivers support requesting pages 
+of results, it's natural to want a transform between the ability to request pages
 to the ability to get a stream of results. That transform is what this library provides.
 
 
@@ -25,31 +26,43 @@ I asked the original question, but absolutely all credit for the implementation 
 Example of using the spliterator against a faked source (a list with slow fetches).
 
 ```Java
+
     @Test
-    public void run() {
+    public void test() {
 
 
-        List<Integer> nums = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
+        List<String> items = IntStream.range(0, 200).boxed()
+                .map(Object::toString).collect(toList());
 
-        Stream<Integer> stream = getPagedStream(5, nums);
+        Stream<String> stream = PagingStreams
+                .streamBuilder(getProvider(items))
+                .pageSize(30).parallel(true).build();
 
-        stream.forEach(System.out::print); // completes in about 10 seconds on a macbook pro
+
+        long start = time();
+        stream.forEach(item -> {});
+        long stop = time();
+
+
+         // completes in about 4 seconds on a macbook pro
+         // even though requesting each of the pages sequentially
+         // would take 12 seconds
+        assertTrue(stop - start < 5000);
+        assertTrue(stop - start > 3000);
 
     }
 
-    private static <T> Stream<T> getPagedStream(long pageSize, List<T> items) {
-
-        PageProvider<T> producer = (offset, limit, totalSizeSink) -> {
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException ignored) {}
-
-            int endIndex = Math.min((int) (offset + limit), items.size());
+    private static PageSource<String> getProvider(List<String> items) {
+        return (offset, limit, totalSizeSink) -> {
+            sleep(2000);
             totalSizeSink.accept(items.size());
-            return items.subList((int) offset, endIndex);
+            return items.subList((int) offset, min((int) (offset + limit), items.size()));
         };
+    }
 
-        return PagingSpliterator.streamPagedSource(producer, pageSize, true);
+    private static void sleep(long millis) {
+        try { Thread.sleep(millis); }
+        catch (InterruptedException ignored) {}
     }
 
 ```
@@ -73,23 +86,23 @@ using a non-parallel stream.
 The result parallelism characteristics are really equivalent to processing
 a stream originating from a list.
 
-Release Versions
+### Release Versions
 ```xml
 <dependencies>
     <dependency>
         <groupId>com.github.rutledgepaulv</groupId>
-        <artifactId>paging-spliterator</artifactId>
+        <artifactId>paging-streams</artifactId>
         <version><!-- Not yet released --></version>
     </dependency>
 </dependencies>
 ```
 
-Snapshot Versions
+### Snapshot Versions
 ```xml
 <dependencies>
     <dependency>
         <groupId>com.github.rutledgepaulv</groupId>
-        <artifactId>paging-spliterator</artifactId>
+        <artifactId>paging-streams</artifactId>
         <version>1.0-SNAPSHOT</version>
     </dependency>
 </dependencies>
@@ -106,5 +119,6 @@ Snapshot Versions
 </repositories>
 ```
 
+### License
 
 This project is licensed under [MIT license](http://opensource.org/licenses/MIT).
