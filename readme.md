@@ -1,16 +1,17 @@
-[![Build Status](https://travis-ci.org/RutledgePaulV/paging-spliterator.svg?branch=develop)](https://travis-ci.org/RutledgePaulV/paging-streams)
-[![Coverage Status](https://coveralls.io/repos/github/RutledgePaulV/paging-spliterator/badge.svg?branch=develop)](https://coveralls.io/github/RutledgePaulV/paging-streams?branch=develop)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.rutledgepaulv/paging-spliterator/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.rutledgepaulv/paging-streams)
+[![Build Status](https://travis-ci.org/RutledgePaulV/paging-streams.svg?branch=develop)](https://travis-ci.org/RutledgePaulV/paging-streams)
+[![Coverage Status](https://coveralls.io/repos/github/RutledgePaulV/paging-streams/badge.svg?branch=develop)](https://coveralls.io/github/RutledgePaulV/paging-streams?branch=develop)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.rutledgepaulv/paging-streams/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.rutledgepaulv/paging-streams)
 
 
 ### Paging-Streams
 
-Spliterators are the Java8 mechanism for detailing how to break items
-up into forks of a fork-join tree and how to iterate elements of a single fork.
-Due to the convenience of the streams there's a relatively common question of
-how to get stream handles from a database without requiring support directly at
-the driver level. Since almost all database drivers support requesting pages of
-results, it's natural to want a transform between the ability to request pages
+Spliterators are the Java8 mechanisms for detailing how to get and traverse elements
+of a stream view over some source. Spliterators include details like how to break 
+processes across elements up into forks of a fork-join tree and how to iterate 
+elements of a single fork. Due to the convenience of the streams there is a relatively 
+common question of how to get stream handles from a database without requiring support 
+directly at the driver level. Since almost all database drivers support requesting pages 
+of results, it's natural to want a transform between the ability to request pages
 to the ability to get a stream of results. That transform is what this library provides.
 
 
@@ -90,7 +91,7 @@ a stream originating from a list.
 <dependencies>
     <dependency>
         <groupId>com.github.rutledgepaulv</groupId>
-        <artifactId>paging-spliterator</artifactId>
+        <artifactId>paging-streams</artifactId>
         <version><!-- Not yet released --></version>
     </dependency>
 </dependencies>
@@ -101,7 +102,7 @@ a stream originating from a list.
 <dependencies>
     <dependency>
         <groupId>com.github.rutledgepaulv</groupId>
-        <artifactId>paging-spliterator</artifactId>
+        <artifactId>paging-streams</artifactId>
         <version>1.0-SNAPSHOT</version>
     </dependency>
 </dependencies>
