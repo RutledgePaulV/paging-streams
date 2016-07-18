@@ -44,9 +44,9 @@ Example of using the spliterator against a faked source (a list with slow fetche
         long stop = time();
 
 
-         // completes in about 4 seconds on a macbook pro
-         // even though requesting each of the pages sequentially
-         // would take 12 seconds
+        // completes in ~4 seconds on a macbook pro
+        // even though requesting each of the pages
+        // synchronously would take ~14 seconds
         assertTrue(stop - start < 5000);
         assertTrue(stop - start > 3000);
 
