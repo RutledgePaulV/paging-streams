@@ -1,4 +1,4 @@
-package com.github.rutledgepaulv;
+package com.github.rutledgepaulv.pagingstreams;
 
 import java.util.List;
 import java.util.function.LongConsumer;

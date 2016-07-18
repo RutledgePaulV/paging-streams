@@ -1,9 +1,9 @@
-[![Build Status](https://travis-ci.org/RutledgePaulV/paging-spliterator.svg?branch=develop)](https://travis-ci.org/RutledgePaulV/paging-spliterator)
-[![Coverage Status](https://coveralls.io/repos/github/RutledgePaulV/paging-spliterator/badge.svg?branch=develop)](https://coveralls.io/github/RutledgePaulV/paging-spliterator?branch=develop)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.rutledgepaulv/paging-spliterator/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.rutledgepaulv/paging-spliterator)
+[![Build Status](https://travis-ci.org/RutledgePaulV/paging-spliterator.svg?branch=develop)](https://travis-ci.org/RutledgePaulV/paging-streams)
+[![Coverage Status](https://coveralls.io/repos/github/RutledgePaulV/paging-spliterator/badge.svg?branch=develop)](https://coveralls.io/github/RutledgePaulV/paging-streams?branch=develop)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.rutledgepaulv/paging-spliterator/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.rutledgepaulv/paging-streams)
 
 
-### Paging-Spliterator
+### Paging-Streams
 
 Spliterators are the Java8 mechanism for detailing how to break items
 up into forks of a fork-join tree and how to iterate elements of a single fork.
@@ -33,7 +33,7 @@ Example of using the spliterator against a faked source (a list with slow fetche
         List<String> items = IntStream.range(0, 200).boxed()
                 .map(Object::toString).collect(toList());
 
-        Stream<String> stream = PagingStreamSupport
+        Stream<String> stream = PagingStreams
                 .streamBuilder(getProvider(items))
                 .pageSize(30).parallel(true).build();
 

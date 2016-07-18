@@ -9,26 +9,25 @@
     </parent>
 
     <version>1.0-SNAPSHOT</version>
-    <groupId>com.github.rutledgepaulv</groupId>
-    <artifactId>paging-spliterator</artifactId>
+    <artifactId>paging-streams</artifactId>
 
     <name>paging-spliterator</name>
-    <url>https://github.com/rutledgepaulv/paging-spliterator</url>
-    <description><!-- A riveting description --></description>
+    <url>https://github.com/rutledgepaulv/paging-streams</url>
+    <description>A java spliterator implementation for wrapping paged sources</description>
 
     <scm>
-        <url>https://github.com/rutledgepaulv/paging-spliterator</url>
-        <connection>scm:git:git@github.com:rutledgepaulv/paging-spliterator.git</connection>
+        <url>https://github.com/rutledgepaulv/paging-streams</url>
+        <connection>scm:git:git@github.com:rutledgepaulv/paging-streams.git</connection>
     </scm>
 
     <ciManagement>
         <system>travis</system>
-        <url>https://travis-ci.org/rutledgepaulv/paging-spliterator</url>
+        <url>https://travis-ci.org/rutledgepaulv/paging-streams</url>
     </ciManagement>
 
     <issueManagement>
         <system>github</system>
-        <url>https://github.com/rutledgepaulv/paging-spliterator/issues</url>
+        <url>https://github.com/rutledgepaulv/paging-streams/issues</url>
     </issueManagement>
 
 
